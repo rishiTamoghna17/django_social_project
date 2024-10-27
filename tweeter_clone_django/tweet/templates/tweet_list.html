@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+{% load static %} 
+{% block title %}letz tweet{% endblock %}
+
+{% block content %}
+<style>
+  .feed-container {
+    max-width: 600px;
+    margin: auto;
+  }
+
+  /* Tweet card styling */
+  .tweet-card {
+    border: none;
+    border-radius: 12px;
+    background-color: #1c1c1e;
+    color: #e0e0e0;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+  }
+
+  .tweet-card:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Profile and username styling */
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .profile-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    object-fit: cover;
+    background-color: #2d2d2f;
+  }
+
+  .username {
+    font-weight: bold;
+    color: #4ea8de;
+  }
+
+  /* Tweet content styling */
+  .card-text {
+    color: #b3b3b3;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  /* Button styling */
+  .btn-action {
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    width: 48%;
+  }
+
+  .btn-edit {
+    color: #4ea8de;
+    border: 1px solid #4ea8de;
+  }
+
+  .btn-delete {
+    color: #ff4c4c;
+    border: 1px solid #ff4c4c;
+  }
+
+  /* Create button styling */
+  .btn-create {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 1.5rem auto;
+    padding: 0.75rem;
+  }
+</style>
+
+<a class="btn btn-primary btn-create" href="{% url 'create_tweet' %}">Create a Tweet</a>
+
+<div class="feed-container">
+  {% for tweet in tweets %}
+  <div class="tweet-card">
+    <div class="user-info">
+      {% if tweet.user.profile_picture %}
+      <img src="{{ tweet.user.profile_picture.url }}" alt="Profile picture" class="profile-img">
+      {% else %}
+      <img src="{% static 'images/default-profile.jpg' %}" alt="Default profile picture" class="profile-img">
+      {% endif %}
+      <span class="username">{{ tweet.user.username }}</span>
+    </div>
+    {% if tweet.photo %}
+    <img src="{{ tweet.photo.url }}" class="card-img-top mb-3 rounded" alt="Tweet image" style="width: 100%; height: auto;">
+    {% endif %}
+    <p class="card-text">{{ tweet.content }}</p>
+    {% if tweet.user == user %}
+    <div class="d-flex justify-content-between">
+      <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-action btn-edit">Edit</a>
+      <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-action btn-delete">Delete</a>
+    </div>
+    {% endif %}
+  </div>
+  {% empty %}
+  <p class="text-center text-muted">No tweets available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

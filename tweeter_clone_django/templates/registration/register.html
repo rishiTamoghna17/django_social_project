@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #1c1c1c; /* Dark background */
+    color: white; /* Light text */
+    font-family: Arial, sans-serif; /* Font family for better readability */
+  }
+
+  .registration-container {
+    max-width: 400px; /* Set max width */
+    margin: 50px auto; /* Center the form */
+    padding: 30px; /* Add padding */
+    background-color: #2a2a2a; /* Slightly lighter dark background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Shadow for depth */
+    transition: transform 0.2s; /* Smooth scale on hover */
+  }
+
+  .registration-container:hover {
+    transform: scale(1.02); /* Slight scale effect on hover */
+  }
+
+  h2 {
+    text-align: center; /* Center the heading */
+    margin-bottom: 30px; /* Space below heading */
+    font-size: 24px; /* Increase font size for heading */
+    color: #007bff; /* Add color to heading */
+  }
+
+  .btn-primary {
+    width: 100%; /* Full width for button */
+    padding: 12px; /* Increase button padding */
+    font-size: 16px; /* Increase button font size */
+    border-radius: 5px; /* Rounded button corners */
+    transition: background-color 0.3s; /* Smooth transition for button */
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .form-group {
+    margin-bottom: 20px; /* Space between fields */
+  }
+
+  .form-control {
+    background-color: #333; /* Dark background for input fields */
+    color: white; /* Light text for input */
+    border: 1px solid #444; /* Dark border */
+    border-radius: 5px; /* Rounded input corners */
+    padding: 10px; /* Padding inside inputs */
+    transition: border-color 0.3s; /* Smooth transition for border */
+  }
+
+  .form-control:focus {
+    background-color: #444; /* Darker background on focus */
+    border-color: #007bff; /* Blue border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue shadow on focus */
+  }
+
+  .form-control::placeholder {
+    color: #aaa; /* Light color for placeholder text */
+  }
+</style>
+
+<div class="registration-container">
+    <h2>Register</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</div>
+{% endblock %}

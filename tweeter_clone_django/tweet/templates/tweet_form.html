@@ -1,0 +1,102 @@
+{% extends "layout.html" %} 
+
+{% block title %} letz tweet {% endblock %} 
+
+{% block content %}
+<style>
+  /* Overall container styling */
+  .form-container {
+    background-color: #1f1f1f;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    color: #e0e0e0;
+    max-width: 500px;
+    margin: auto;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .form-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Title styling */
+  h1 {
+    font-size: 1.8rem;
+    color: #ffc107;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  /* Form field styling */
+  .form label {
+    font-weight: 500;
+    color: #cfcfcf;
+  }
+
+  .form-control, .form-select {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 0.8rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    outline: none;
+  }
+
+  /* Button styling */
+  .btn-submit {
+    background-color: #ffc107;
+    color: #1f1f1f;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .btn-submit:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+  }
+
+  /* Back link styling */
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #a8a8a8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .back-link:hover {
+    color: #ffc107;
+  }
+</style>
+
+<div class="container my-5">
+  <div class="form-container">
+    <h1>
+      {% if form.instance.pk %} Edit Tweet {% else %} Create a New Tweet {% endif %}
+    </h1>
+    <form method="POST" enctype="multipart/form-data" class="form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-submit" type="submit">Submit</button>
+    </form>
+    <a href="{% url 'tweet_list' %}" class="back-link">Back to tweets</a>
+  </div>
+</div>
+{% endblock %}
